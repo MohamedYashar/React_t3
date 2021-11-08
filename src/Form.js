@@ -1,4 +1,5 @@
 import {useState} from 'react'
+import Button from '@mui/material/Button';
 
 
 function Form (){
@@ -16,15 +17,17 @@ function Form (){
 
              <div className="container">
 
-                    <h1>Movie Data Base</h1>
+                    
+                    <h1 >Movie Data Base</h1>
                
                     <input  placeholder="Enter Movie name"       onChange  ={(x)=> setMname(x.target.value)}  />   
                     <input  placeholder="Paste your image link"  onChange  ={(y)=> setPoster(y.target.value)} />                  
                     <input  placeholder="Movie summary "         onChange  ={(z)=>  setSummary(z.target.value)} />  
                     <input  placeholder="Ratings"                onChange  ={(e)=>  setRating(e.target.value)} />  
                    
-                   <button type="submit" onClick= { () => setmovieList([...movieList, ...currentMovie])} > Submit</button>
-                    
+                   
+
+                   <Button variant="contained" type="submit" onClick= { () => setmovieList([...movieList, ...currentMovie])} >Add Movie</Button>
                     
                     <div className="movielist">
                     {movieList.map ((x)=>(<Movie Mname ={x.mname}    poster= {x.poster} 
@@ -45,10 +48,10 @@ function Movie({ Mname, poster, summary, Ratings }) {
       <div className="movieContainer">
           
           <div  >
-                <img height="200" width=" 250" src={poster} alt={Mname} />
-                <h3> MovieName: {Mname}</h3>
-                <p>  Summary: {summary} </p>
-                <h5> Ratings: {Ratings}</h5>
+                <img  src={poster} alt="Movie Image" />
+                <h3> {Mname}</h3>
+                <p>  {summary} </p>
+                <h5> {Ratings}</h5>
               
           
           </div>
