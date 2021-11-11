@@ -10,9 +10,9 @@ function Form (){
     const [Mname,setMname]     = useState("") 
     const [poster,setPoster]   = useState ("")
     const [summary,setSummary] = useState("")
-    const [rating,setRating]   = useState("")
+    const [Ratings,setRating]   = useState("")
 
-    const  currentMovie  = [{ Mname:Mname,poster,summary,rating }]
+    const  currentMovie  = [{ Mname:Mname,poster,summary,Ratings } ]
 
     const [movieList, setmovieList] = useState(Initial)
 
@@ -43,8 +43,8 @@ function Form (){
 
             <div className="movielist">
               
-                {movieList.map ((x)=>(<Movie  Mname = {x.Mname}    poster= {x.poster} 
-                                            summary= {x.summary}  Ratings= {x.rating}
+                {movieList.map (({ Mname, poster, summary, Ratings },index)=>(<Movie  Mname = {Mname}    poster= {poster} 
+                                            summary= {summary}  Ratings= {Ratings} index = {index}
                                         />))}
 
             </div>

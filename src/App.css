@@ -43,6 +43,7 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 10px;
+    
   }
   
   .movieContainer{
@@ -52,7 +53,7 @@
     flex-direction: row;
     justify-content: center;
     width: 270px ;
-    /* height: min-content; */
+    /* height: max-content; */
     
   
   }
@@ -60,6 +61,7 @@
     
     height: 330px;
     width: 150px ;
+    
   }
   
   
@@ -80,3 +82,15 @@
     text-align: justify;
   }
 
+  .firstrow_Moviecontainer{
+
+    display: flex;
+    justify-content: space-between;
+    
+  }
+
+  .firstrow_Moviecontainer-1{
+
+    display: flex;
+    justify-content: flex-start;
+  }
