@@ -39,8 +39,8 @@ export function MovieForm() {
       </div>
       <div className="movielist">
 
-        {movieList.map(({ Mname, poster, summary, Ratings } ) => (<Movie Mname={Mname} poster={poster}
-          summary={summary} Ratings={Ratings} />))}
+        {movieList.map(({x} ) => (<Movie Mname={x.Mname} poster={x.poster}
+          summary={x.summary} Ratings={x.Ratings} />))}
 
       </div>
     </div>
