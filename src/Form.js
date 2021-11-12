@@ -43,8 +43,8 @@ function Form (){
 
             <div className="movielist">
               
-                {movieList.map (({ Mname, poster, summary, Ratings },index)=>(<Movie  Mname = {Mname}    poster= {poster} 
-                                            summary= {summary}  Ratings= {Ratings} index = {index}
+                {movieList.map ((x)=>(<Movie  Mname = {x.Mname}    poster= {x.poster} 
+                                            summary= {x.summary}  Ratings= {x.Ratings}
                                         />))}
 
             </div>

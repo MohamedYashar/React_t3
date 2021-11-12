@@ -4,6 +4,7 @@ import { Movie } from './Movie';
 import TextField from '@mui/material/TextField';
 
 
+
 export function MovieForm() {
 
   const [Mname, setMname] = useState("");
@@ -39,7 +40,7 @@ export function MovieForm() {
       </div>
       <div className="movielist">
 
-        {movieList.map(({x} ) => (<Movie Mname={x.Mname} poster={x.poster}
+        {movieList.map((x ) => (<Movie Mname={x.Mname} poster={x.poster}
           summary={x.summary} Ratings={x.Ratings} />))}
 
       </div>
