@@ -16,6 +16,11 @@ function Form (){
 
     const [movieList, setmovieList] = useState(Initial)
 
+    const add = () => { setmovieList([...movieList, ...currentMovie])
+
+                  Initial.push(...currentMovie)}
+
+
     return (
 
       <div>
@@ -35,7 +40,7 @@ function Form (){
                   onChange  ={(e)=>  setRating(e.target.value)}  />
 
 
-            <Button  variant="contained" type="submit" onClick= { () => setmovieList([...movieList, ...currentMovie])} >Add Movie</Button>
+            <Button  variant="contained" type="submit" onClick= { add } >Add Movie</Button>
 
 
             </div> 
@@ -43,7 +48,7 @@ function Form (){
 
             <div className="movielist">
               
-                {movieList.map ((x)=>(<Movie  Mname = {x.Mname}    poster= {x.poster} 
+                {movieList.map ((x, index)=>(<Movie  index = {index} Mname = {x.Mname}    poster= {x.poster} 
                                             summary= {x.summary}  Ratings= {x.Ratings}
                                         />))}
 

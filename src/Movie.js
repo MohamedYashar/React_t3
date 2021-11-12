@@ -13,16 +13,34 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 import { Counter } from './Counter';
 
-import { useHistory} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import { Initial } from './Initial';
+
+// import { MovieForm } from './MovieForm';
 
 
 
 
-  export function Movie({ Mname, poster, summary, Ratings } ) {
+  export function Movie({ Mname, poster, summary, Ratings, index}) {
 
   const [show, setshow] = useState(true);
   const styles = { display: show ? "block" : "none" };
   const history = useHistory();
+
+  const Remove = (index) => { 
+                            Initial.splice(index,1);
+                            history.push('/Movies/Remove/')
+                           }
+
+  // const Edit = (index)  => {
+
+  //   const a = <TextField id="outlined-basic" label="Enter Movie name" variant="outlined"
+  //   onChange={(x) => setMname(x.target.value)} />
+
+  //                           Initial.splice(index,1, `a`)
+  //                           history.push('/Movies/Edit/')
+
+  // }
 
   return (   
     
@@ -47,13 +65,13 @@ import { useHistory} from 'react-router-dom'
              
 
               <div className="firstrow_Moviecontainer-1">
-                  <IconButton  onClick={()=> history.push('/AddColor')} aria-label="Info Icon" color="primary">
+                  <IconButton  onClick={()=> history.push('/films/' + index)} aria-label="Info Icon" color="primary">
                     <InfoIcon/>
                   </IconButton> 
                   <IconButton  aria-label="Edit Icon" color="success">
                     <EditIcon/>
                   </IconButton>
-                  <IconButton aria-label="Delete Icon" color="error">
+                  <IconButton onClick= {Remove} aria-label="Delete Icon" color="error">
                     <DeleteIcon/>
                   </IconButton> 
               </div>            
@@ -74,25 +92,4 @@ import { useHistory} from 'react-router-dom'
 }
 
 
-// function Edit ({Mname,Ratings,summary}){
-
-//   return (
-
-//     <Card className="movieContainer">    
-//         <CardContent>      
-          
-//             <h3 className="firstrow_Moviecontainer">
-//             {Mname}            
-//             <span>⭐ {Ratings}</span>            
-//             </h3>   
-//             <p >{summary} </p>          
-            
-//         </CardContent>
-
-      
-//       </Card>
-    
-
-//   )
-// }
 

@@ -1,11 +1,12 @@
-import { Link,Route, Redirect, Switch} from 'react-router-dom';
+import { Link,Route, Redirect, Switch, useParams, useHistory} from 'react-router-dom';
 import './App.css';
 import Form from './Form'
 import { About } from './About';
 import { Dashboard } from './Dashboard';
 import { AddColor } from './AddColor';
 import { MovieForm } from './MovieForm';
-import { textAlign } from '@mui/system';
+import { Initial } from './Initial';
+// import { textAlign } from '@mui/system';
 
 function App() {
   return (
@@ -27,19 +28,24 @@ function App() {
       <hr/>
 
       <Switch>
-        <Route path="/movies/add">   <Redirect to="/addMovie"/>    </Route>
-          <Route path="/addMovie">   <MovieForm/>                  </Route>
-          <Route path='/movies'>     <Redirect to="/films"/>       </Route>
+          <Route path='/Movies/Edit/'>  <Redirect to="/films" />   </Route>
+          <Route path='/Movies/Remove'> <Redirect to="/films" />   </Route>
+          <Route path="/movies/add">    <Redirect to="/addMovie"/> </Route>          
+          <Route path='/movies'>        <Redirect to="/films" />   </Route>          
+          <Route path="/films/:id" >    <MovieDetails />           </Route>
+          <Route path="/addMovie">      <MovieForm/>               </Route>
+          
 
-          <Route path="/films/:id"  >     Movie Details      </Route>  
-          <Route path="/films"  >      <Form/>      </Route> 
+          {/* <Route path="/films/Remove/:id"  >    <Remove />   </Route>    */}
+
+          <Route path="/films" >      <Form/>      </Route> 
           <Route path="/about">       <About/>      </Route>
           <Route path="/dashboard">   <Dashboard/>  </Route>
           <Route path="/AddColor">    <AddColor/>   </Route>          
-          <Route exact path= "/">     <Welcome/>     </Route>
+          <Route exact path= "/">     <Welcome/>    </Route>
           <Route exact path="**">
           <NotFound/>         
-          </Route>
+          </Route> //
           {/* <Route path="/edit">
             <Edit/>
           </Route>
@@ -77,24 +83,34 @@ function NotFound(){
 }
 
 
-// export function Edit ({Mname,Ratings,summary}){
 
-//   return (
+function MovieDetails (){
 
-//     <Card className="movieContainer">    
-//         <CardContent>      
-          
-//             <h3 className="firstrow_Moviecontainer">
-//             {Mname}            
-//             <span>⭐ {Ratings}</span>            
-//             </h3>   
-//             <p >{summary} </p>          
-            
-//         </CardContent>
+  const {id}= useParams();  
+  const Films = Initial[id];
 
-      
-//       </Card>
-    
+  const history = useHistory();
 
-//   )
+  const back = ()=> { history.push('/films/')}
+
+  return      <div className="movieContainer">  
+ 
+           
+          <div>      
+             <h3 className="firstrow_Moviecontainer">
+              {Films.Mname}                             
+              <span>⭐ {Films.Ratings}</span>            
+              </h3>        
+              <p >{Films.summary} </p>
+              
+              <button onClick= {back}> ⬅ Back</button>
+          </div>
+
+
+</div>
+}
+
+
+// function Edit () {
+
 // }

@@ -1,4 +1,8 @@
+
+
+
 import { useState } from 'react';
+
 import Button from '@mui/material/Button';
 import { Movie } from './Movie';
 import TextField from '@mui/material/TextField';
@@ -7,14 +11,16 @@ import TextField from '@mui/material/TextField';
 
 export function MovieForm() {
 
-  const [Mname, setMname] = useState("");
-  const [poster, setPoster] = useState("");
+  const [Mname,   setMname]   = useState("");
+  const [poster,  setPoster]  = useState("");
   const [summary, setSummary] = useState("");
-  const [Ratings, setRating] = useState("");
+  const [Ratings, setRating]  = useState("");
 
   const currentMovie = [{ Mname: Mname, poster, summary, Ratings }];
 
   const [movieList, setmovieList] = useState([]);
+
+ 
 
   return (
     <div>
@@ -40,8 +46,8 @@ export function MovieForm() {
       </div>
       <div className="movielist">
 
-        {movieList.map((x ) => (<Movie Mname={x.Mname} poster={x.poster}
-          summary={x.summary} Ratings={x.Ratings} />))}
+        {movieList.map((x) => (<Movie Mname={x.Mname} poster={x.poster}
+          summary={x.summary} Ratings={x.Ratings}  />))}
 
       </div>
     </div>
