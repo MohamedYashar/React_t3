@@ -90,7 +90,6 @@ function MovieDetails (){
   const Films = Initial[id];
 
   const history = useHistory();
-
   const back = ()=> { history.push('/films/')}
 
   return      <div className="movieContainer">  
