@@ -4,6 +4,7 @@ import Form from './Form'
 import { AddColor } from './AddColor';
 import { MovieForm } from './MovieForm';
 import { Initial } from './Initial';
+import { useState } from 'react';
 
 
 import * as React from 'react';
@@ -12,6 +13,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Button from '@mui/material/Button';
 
 import { EditMovie } from './EditMovie';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Paper from '@mui/material/Paper';
 
 
 
@@ -22,7 +25,23 @@ function App() {
 
   const history = useHistory();
 
+  const [mode, setmode] = useState("dark") ;  
+
+
+
+  // 1.creating context
+  const theme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
+
+
+
   return (
+    //2. pusblisher provider
+    <ThemeProvider theme={theme}>
+      <Paper elevation={3} >
     <div className="App">
 
       <AppBar position="static">
@@ -39,7 +58,9 @@ function App() {
           <Button onClick= { ()=>history.push ("/addMovie")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
           Add Movie Form
           </Button>
-          
+          <Button onClick= { ()=>setmode( mode === "light" ?"dark":"light")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
+           {( mode === "light" ?"dark":"light")} Theme
+          </Button>
           
         </Toolbar>
       </AppBar>
@@ -63,6 +84,8 @@ function App() {
       </Switch>
 
     </div>
+    </Paper   >
+    </ThemeProvider> 
   );
 }
 
