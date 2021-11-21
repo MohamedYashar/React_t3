@@ -15,6 +15,8 @@ import Button from '@mui/material/Button';
 import { EditMovie } from './EditMovie';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Paper from '@mui/material/Paper';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
 
@@ -58,7 +60,7 @@ function App() {
           <Button onClick= { ()=>history.push ("/addMovie")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
           Add Movie Form
           </Button>
-          <Button onClick= { ()=>setmode( mode === "light" ?"dark":"light")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
+          <Button  startIcon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />} onClick= { ()=>setmode( mode === "light" ?"dark":"light")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
            {( mode === "light" ?"dark":"light")} Theme
           </Button>
           

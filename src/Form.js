@@ -38,7 +38,7 @@ export function Form (){
 
             <div className="container">
 
-            <TextField  value = {Mname} id="outlined-basic" label="Enter Movie name" variant="outlined"
+            <TextField   value = {Mname} id="outlined-basic" label="Enter Movie name" variant="outlined"
           onChange={(x) => setMname(x.target.value)} />
 
             <TextField value = {poster} id="outlined-basic" label="Paste your image link" variant="outlined"
