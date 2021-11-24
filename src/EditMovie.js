@@ -67,7 +67,7 @@ export function EditMovie() {
 
 function UpdateMovie ({movie}){
 
-    const [Mname,setMname]     = useState   ("movie.Mname")
+    const [Mname,setMname]     = useState   (movie.Mname)
     const [poster,setPoster]   = useState   (movie.poster)
     const [summary,setSummary] = useState   (movie.summary)
     const [Ratings,setRating]   = useState  (movie.Ratings)
