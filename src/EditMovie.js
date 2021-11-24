@@ -2,53 +2,118 @@ import { useParams, useHistory } from 'react-router-dom';
 import { Initial } from './Initial';
 import * as React from 'react';
 import Button from '@mui/material/Button';
-import { useState } from 'react';
+import {useState, useEffect} from 'react'
 import TextField from '@mui/material/TextField';
+
+import {useFormik} from "formik"
+import * as yup from 'yup';
 
 export function EditMovie() {
 
-  const { id } = useParams();
-  const [movieList, setmovieList] = useState(Initial);
+  const {id} = useParams();
 
-  const SelectedMovies = Initial[id];
+  const [movie, setMovie] =useState([]);
 
-  console.log(Initial, SelectedMovies);
+  
 
-  const [Mname, setMname] = useState(SelectedMovies.Mname);
-  const [poster, setPoster] = useState(SelectedMovies.poster);
-  const [summary, setSummary] = useState(SelectedMovies.summary);
-  const [Ratings, setRating] = useState(SelectedMovies.Ratings);
-  const [trailer, setTrailer] = useState(SelectedMovies.trailer);
+// BAD EXAMPLE
+  // function MovieData(){
+  //   console.log(id);
+
+  //   const url = `https://61988db4164fa60017c230f5.mockapi.io/movies/${id}` ;
+  //   console.log(url)
+  //   fetch(url)
+  //   .then((response) => response.json())
+  //   .then ((data) => setMovie(data))
+  //   .then(console.log(movie))
+  // }
+
+  
+
+  // data fetching and partiular data (Racing issue)
+
+  async function getmovdat (){
+    const url = `https://61988db4164fa60017c230f5.mockapi.io/movies/${id}` ;
+    console.log(url)
+
+    let response = await fetch(url);
+    let data = await response.json() 
+    setMovie(data)
+    console.log (movie)
+  }
+
+  useEffect(getmovdat, []) 
+
+    const [Mname,setMname]     = useState("") 
+    const [poster,setPoster]   = useState ("")
+    const [summary,setSummary] = useState("")
+    const [Ratings,setRating]  = useState("")
+    const [trailer,setTrailer] = useState("")
+
+  return <div>
+    <UpdateMovie movie ={movie} />
+  </div>
+
+}
+
+const formValidationSchema = yup. object({
+  Mname: yup.string().required(),
+  poster: yup.string().min(4).required(),
+  summary: yup.string().matches(0 - 10).required(),
+  Ratings: yup.string().min(20).required(),
+  trailer: yup.string().min(4).required(),
+  
+})
+
+function UpdateMovie ({movie}){
+
+    const [Mname,setMname]     = useState(movie.Mname) 
+    const [poster,setPoster]   = useState (movie.poster)
+    const [summary,setSummary] = useState(movie.summary)
+    const [Ratings,setRating]   = useState(movie.Ratings)
+    const [trailer,setTrailer]   = useState(movie.trailer)
+    const [id,setid]   = useState(movie.id)
+
+    const {handleSubmit} = useFormik({
+      validationSchema : formValidationSchema,
+      
+    })
+
+    // const [movie, setMovie] =useState([]);
+
+    const history = useHistory();
+
+    const Edit =() => {
+         
+ 
+      const updatedMovie ={Mname:Mname,poster,summary,Ratings,trailer}
+
+      console.log(updatedMovie)
+
+      fetch (`https://61988db4164fa60017c230f5.mockapi.io/movies/${movie.id}`, {
+        method:"PUT", 
+        body: JSON.stringify(updatedMovie),
+        headers : {"Content-type": "application/json"}
+      })
+    .then(history.push("/films"));
+
+      
+    }
 
 
-  const resetForm = () => {
+  //    fetch("https://6199446f9022ea0017a7adfb.mockapi.io/movies/"+id,{
+  //    method:"PUT",
+  // body:JSON.stringify(updatedMovie),
+  //   headers:{"Content-type":"application/json"}})
+  //    .then(history.push("/Movies"));
 
-    setMname("");
-    setPoster("");
-    setSummary("");
-    setRating("");
-    setTrailer("");
-  };
+  // };
 
-
-
-  const history = useHistory();
-
-
-  const Edit = () => {
-
-    const updatedMovie = [{ Mname: Mname, poster, summary, Ratings, trailer }];
-    const movieList = [...Initial];
-    movieList[id] = updatedMovie;
-    setmovieList(movieList);
-    history.push("/films");
-    resetForm();
-  };
 
   return (
     <div>
 
-      <div className="container">
+      <form  onSubmit= {handleSubmit} className="container">
 
         <TextField value={Mname} id="outlined-basic" label="Enter Movie name" variant="outlined"
           onChange={(x) => setMname(x.target.value)} />
@@ -66,11 +131,20 @@ export function EditMovie() {
           onChange={(e) => setTrailer(e.target.value)} />
 
 
-        <Button variant="contained" color="success" type="submit" onClick={Edit}>Save</Button>
+        <Button variant="contained" color="success" type="submit"   onClick = { Edit } >Save</Button>
 
 
-      </div>
+      </form>
 
     </div>
   );
+
 }
+
+
+//Task FOR NEXT WEEK
+    // Validation - on Add movie & Edit movies
+    // name - required// poster - min 4, required
+    // rating - 0 - 10, required
+    // summary - min 20 chars, required
+    // trailer -min 4, required

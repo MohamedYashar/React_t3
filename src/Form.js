@@ -1,8 +1,9 @@
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import Button from '@mui/material/Button';
 import { Movie } from './Movie';
 import { Initial } from './Initial';
 import TextField from '@mui/material/TextField';
+import { useHistory} from 'react-router-dom';
 
 
 export function Form (){
@@ -13,24 +14,41 @@ export function Form (){
     const [Ratings,setRating]   = useState("")
     const [trailer,setTrailer]   = useState("")
 
-    const  currentMovie  = [{ Mname:Mname,poster,summary,Ratings,trailer } ]
+    const history = useHistory();
 
-    const [movieList, setmovieList] = useState(Initial)
+   
 
-    const add = () => { setmovieList([...movieList, ...currentMovie])
+    const  currentMovie  = { Mname:Mname,poster,summary,Ratings,trailer } 
 
-                  Initial.push(...currentMovie)}
+    const [movieList, setmovieList] = useState([])
 
-                  const resetForm = () => {
+    const getData = () => {fetch("https://61988db4164fa60017c230f5.mockapi.io/movies", {method : "GET"})
+    .then((response) => response.json())
+    .then (data => setmovieList(data));}
 
-                        setMname("");
-                        setPoster("");
-                        setSummary("");
-                        setRating("");
-                        setTrailer("");
+    useEffect (() => { getData ()},[]);
+
+
+    
+    const add = () => { 
+                        // setmovieList([...movieList, ...currentMovie])
+
+                        // Initial.push(...currentMovie)
+                        // 1. method-POST 2. body -data & JSON 3.headers -JSON data
+                        
+                        fetch("https://61988db4164fa60017c230f5.mockapi.io/movies", {
+                          method : "POST",
+                          body: JSON.stringify (currentMovie),
+                          headers: {"Content-type":"application/json"}
+                        }).then (()=> getData () )
+                          .then (()=> history.push ('/films'))
 
                       }
+
+    const resetForm = () => { setMname("");     setPoster("");  setSummary("");    setRating("");  setTrailer(""); }
+
                     
+                     
 
     return (
 
@@ -62,7 +80,7 @@ export function Form (){
 
             <div className="movielist">
               
-                {movieList.map ((x, index)=>(<Movie  movieList ={movieList} setmovieList={setmovieList} index ={index} Mname = {x.Mname}    poster= {x.poster} 
+                {movieList.map ((x, index)=>(<Movie  movieList ={movieList} setmovieList={setmovieList} id ={x.id} Mname = {x.Mname}    poster= {x.poster} 
                                             summary= {x.summary}  Ratings= {x.Ratings}    trailer= {x.trailer}
                                         />))}
 
@@ -77,3 +95,11 @@ export function Form (){
 }
 
     export default Form;
+
+    
+    //Task FOR NEXT WEEK
+    // Validation - on Add movie & Edit movies
+    // name - required// poster - min 4, required
+    // rating - 0 - 10, required
+    // summary - min 20 chars, required
+    // trailer -min 4, required

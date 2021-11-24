@@ -5,6 +5,8 @@ import { AddColor } from './AddColor';
 import { MovieForm } from './MovieForm';
 import { Initial } from './Initial';
 import { useState } from 'react';
+import { BasicForm } from './BasicForm';
+
 
 
 import * as React from 'react';
@@ -63,6 +65,9 @@ function App() {
           <Button  startIcon={mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />} onClick= { ()=>setmode( mode === "light" ?"dark":"light")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
            {( mode === "light" ?"dark":"light")} Theme
           </Button>
+          <Button onClick= { ()=>history.push ("/BasicForm")} size="large" color="inherit"  aria-label="Home"sx={{ mr: 2 }}>
+          Basic Form
+          </Button>
           
         </Toolbar>
       </AppBar>
@@ -71,7 +76,7 @@ function App() {
      
       <Switch>
           
-         <Route path="/Movies/Edit/:id">   <EditMovie/>  </Route> 
+         <Route path="/Movies/Edit/:id"> <EditMovie/>  </Route> 
           <Route path="/movies/add">    <MovieForm/>  </Route>                       
           <Route path="/films/:id" >    <MovieDetails />           </Route>
           <Route path="/addMovie">      <MovieForm/>               </Route>
@@ -79,10 +84,12 @@ function App() {
           <Route path='/movies'>        <Redirect to="/films" />   </Route>         
 
           <Route path="/films" >      <Form/>       </Route> 
-                 
+          <Route exact path="/BasicForm">     <BasicForm/>   </Route>    
           <Route path="/AddColor">    <AddColor/>   </Route>          
           <Route exact path= "/">     <Welcome/>    </Route>
-          <Route exact path="**">     <NotFound/>   </Route> 
+          <Route exact path="**">     <NotFound/>   </Route>
+          
+
       </Switch>
 
     </div>
@@ -122,20 +129,25 @@ function NotFound(){
 function MovieDetails (){
 
   const {id}= useParams();  
-  const Films = Initial[id];
-
+  // const Films = Initial[id];
+const [Film,setFilm]=useState({})
+  fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`, {method : "GET"})
+    .then((response) => response.json())
+    .then (data => setFilm(data))
   const history = useHistory();
   const back = ()=> { history.goBack()}
 
   return      <div className="movieContainer-1">  
               
-              <iframe width="100%" height="531" src={Films.trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+              <iframe width="100%" height="531" src={Film.trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
               
              <h3 className="firstrow_Moviecontainer">
-              {Films.Mname}                             
-              <span>⭐ {Films.Ratings}</span>            
+              {Film.Mname}                             
+              <span>⭐ {Film.Ratings}</span>            
               </h3>        
-              <p >{Films.summary} </p>
+              <h1>{Film.id} </h1>
+              <p >{Film.summary} </p>
+
               
               <button onClick= {back}> ⬅ Back</button>
           </div>
