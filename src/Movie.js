@@ -21,7 +21,7 @@ import { useHistory } from 'react-router-dom'
 
 
 
-  export function Movie({ Mname, poster, summary, Ratings, movieList,setmovieList, id} ) {
+  export function Movie({ Mname, poster, summary, Ratings, movieList,setmovieList, id, deleteButton } ) {
 
   const [show, setshow] = useState(true);
   const styles = { display: show ? "block" : "none" };
@@ -37,31 +37,33 @@ import { useHistory } from 'react-router-dom'
 
   
 
-  const getMovies =() => {
-    fetch("https://61988db4164fa60017c230f5.mockapi.io/movies", {method : "GET"})
-    .then(response=>response.json())
-    .then(data=>setMovies(data))
-  }
+  // const getMovies =() => {
+  //   fetch("https://61988db4164fa60017c230f5.mockapi.io/movies", {method : "GET"})
+  //   .then(response=>response.json())
+  //   .then(data=>setMovies(data))
+  //   console.log(movies)
+  // }
 
   //  useEffect(getMovies ,[])
   
-  useEffect (() => {getMovies()},[])
+  // useEffect (() => {getMovies()},[])
 
- const Remove = ()=> {
-  //  console.log (index)                      
-  //  const removeindex =index;
-  //  const remainingmovies = movieList .filter ((mv, idx) => {
-  //   return idx !== removeindex;
+//  const Remove = ()=> {
+//   fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`, {method : "Delete"})
+//   .then(()=>getMovies())
+//   //  console.log (index)                      
+//   //  const removeindex =index;
+//   //  const remainingmovies = movieList .filter ((mv, idx) => {
+//   //   return idx !== removeindex;
     
-  // })
-  // console.log (remainingmovies, removeindex, movieList)
-  // setmovieList(remainingmovies)
+//   // })
+//   // console.log (remainingmovies, removeindex, movieList)
+//   // setmovieList(remainingmovies)
 
-  fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`, {method : "Delete"})
-  .then(()=>getMovies())
-  .then (()=> history.push ('/films'))
   
-}
+//   //.then (()=> history.push ('/films'))
+  
+// }
  
 
   return (   
@@ -93,9 +95,10 @@ import { useHistory } from 'react-router-dom'
                   <IconButton  onClick={()=> history.push('/Movies/Edit/' + id)} aria-label="Edit Icon" color="success">
                     <EditIcon/>
                   </IconButton>
-                  <IconButton onClick= {Remove} aria-label="Delete Icon" color="error">
+                  {/* <IconButton onClick= { (id) => DeleteMovie } aria-label="Delete Icon" color="error">
                     <DeleteIcon/>
-                  </IconButton> 
+                  </IconButton>  */}
+                  {deleteButton}
               </div>            
               
               <p style={styles}>{summary} </p>

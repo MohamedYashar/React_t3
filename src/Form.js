@@ -4,6 +4,8 @@ import { Movie } from './Movie';
 import { Initial } from './Initial';
 import TextField from '@mui/material/TextField';
 import { useHistory} from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 
 export function Form (){
@@ -24,7 +26,8 @@ export function Form (){
 
     const getData = () => {fetch("https://61988db4164fa60017c230f5.mockapi.io/movies", {method : "GET"})
     .then((response) => response.json())
-    .then (data => setmovieList(data));}
+    .then (data => setmovieList(data));
+    console.log(movieList)}
 
     useEffect (() => { getData ()},[]);
 
@@ -41,13 +44,17 @@ export function Form (){
                           body: JSON.stringify (currentMovie),
                           headers: {"Content-type":"application/json"}
                         }).then (()=> getData () )
-                          .then (()=> history.push ('/films'))
+                         // .then (()=> history.push ('/films'))
 
                       }
 
     const resetForm = () => { setMname("");     setPoster("");  setSummary("");    setRating("");  setTrailer(""); }
 
-                    
+      
+    const Remove = (id)=> {
+      fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`, {method : "Delete"})
+      .then(()=>getData())
+    }
                      
 
     return (
@@ -72,7 +79,7 @@ export function Form (){
           onChange={(e) => setTrailer(e.target.value)} />
 
 
-            <Button  variant="contained" type="submit" onClick={() =>  { add (); resetForm () } }>Add Movie</Button>
+            <Button  variant="contained" type="submit" onClick={() =>  { add () ; resetForm () } }>Add Movie</Button>
 
 
             </div> 
@@ -81,7 +88,14 @@ export function Form (){
             <div className="movielist">
               
                 {movieList.map ((x, index)=>(<Movie  movieList ={movieList} setmovieList={setmovieList} id ={x.id} Mname = {x.Mname}    poster= {x.poster} 
-                                            summary= {x.summary}  Ratings= {x.Ratings}    trailer= {x.trailer}
+                                            summary= {x.summary}  Ratings= {x.Ratings}    trailer= {x.trailer} 
+
+                                            deleteButton={
+<IconButton onClick= {()=> Remove(x.id) } aria-label="Delete Icon" color="error">
+                    <DeleteIcon/>
+                  </IconButton>
+
+                                            }
                                         />))}
 
             </div>
