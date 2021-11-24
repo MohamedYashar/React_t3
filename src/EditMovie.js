@@ -74,6 +74,8 @@ function UpdateMovie ({movie}){
     const [trailer,setTrailer]   = useState (movie.trailer)
     const [id,setid]   = useState(movie.id)
 console.log(movie)
+console.log(movie)
+
     // const {handleSubmit} = useFormik({
     //   validationSchema : formValidationSchema,
       
