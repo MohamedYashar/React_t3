@@ -1,4 +1,4 @@
-import { Link,Route, Redirect, Switch, useParams, useHistory} from 'react-router-dom';
+import { Link, Route, Redirect, Switch, useParams, useHistory} from 'react-router-dom';
 import './App.css';
 import Form from './Form'
 import { AddColor } from './AddColor';
@@ -76,7 +76,7 @@ function App() {
      
       <Switch>
           
-         <Route path="/Movies/Edit/:id"> <EditMovie/>  </Route> 
+          <Route path="/Movies/Edit/:id"> <EditMovie/>  </Route> 
           <Route path="/movies/add">    <MovieForm/>  </Route>                       
           <Route path="/films/:id" >    <MovieDetails />           </Route>
           <Route path="/addMovie">      <MovieForm/>               </Route>
@@ -130,7 +130,7 @@ function MovieDetails (){
 
   const {id}= useParams();  
   // const Films = Initial[id];
-const [Film,setFilm]=useState({})
+  const [Film,setFilm]=useState({})
   fetch(`https://61988db4164fa60017c230f5.mockapi.io/movies/${id}`, {method : "GET"})
     .then((response) => response.json())
     .then (data => setFilm(data))
